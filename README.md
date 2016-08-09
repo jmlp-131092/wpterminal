@@ -19,7 +19,11 @@ By the time you're reading this only the Plugin Module is working and it was onl
 - templates
 - res
  - js
+  - admin
+  - frontend
  - css
+  - admin
+  - css
 - my-plugin.php
 
 
