@@ -20,12 +20,12 @@ By the time you're reading this only the Plugin Module is working and it was onl
 - res
  - js
   - admin
-   - admin.js
+    - admin.js
   - frontend
-   - frontend.js
+    - frontend.js
  - css
-  - admin
-  - css
+   - admin
+   - css
 - my-plugin.php
 
 
