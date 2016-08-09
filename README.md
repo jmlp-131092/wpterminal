@@ -41,9 +41,9 @@ In you plugin main file by default are defined some constants:
     
 Also is declared de 'init' hook for the plugin initialization
 
- `function init_my_plugin_plugin ()
- {
- 
- }
- add_action('init', 'init_my_plugin_plugin');`
+    function init_my_plugin_plugin ()
+    {
+    
+    }
+    add_action('init', 'init_my_plugin_plugin');`
  
