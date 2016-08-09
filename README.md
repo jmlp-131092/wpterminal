@@ -19,7 +19,8 @@ By the time you're reading this only the Plugin Module is working and it was onl
 - templates
 - res
 - my-plugin.php
-- 
+
+
 In you plugin main file by default are defined some constants:
 
     - THE_PLUGIN_BASE_PATH
