@@ -68,9 +68,17 @@ class PluginModule(AbstractModule):
 		_file.write('define("THE_PLUGIN_TEMPLATES_PATH", plugin_dir_path( __FILE__ ) . "/templates");\n\n')
 
 		init_fnc_declaration = 'function init_'  + self.dirname.replace('-', '_').lower() + '_plugin ()\n{\n\n}\n'
-		init_hook_declaration = 'add_action("init", "init_' + self.dirname.replace('-', '_').lower() + '_plugin");\n'
+		init_hook_declaration = 'add_action("init", "init_' + self.dirname.replace('-', '_').lower() + '_plugin");\n\n'
 
 		_file.write(init_fnc_declaration);
 		_file.write(init_hook_declaration);
+
+		activate_fnc_declaration = 'function activate_'  + self.dirname.replace('-', '_').lower() + '_plugin ()\n{\n\n}\n'
+		activate_hook_declaration = 'register_activation_hook(__FILE__, "active_' + self.dirname.replace('-', '_').lower() + '_plugin");\n'
+
+		_file.write(activate_fnc_declaration);
+		_file.write(activate_hook_declaration);
+
+
 
 		_file.write('?>')
