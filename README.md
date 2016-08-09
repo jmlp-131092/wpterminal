@@ -25,9 +25,9 @@ By the time you're reading this only the Plugin Module is working and it was onl
       - frontend.js
  - css
    - admin
-     - admin.css
-   - frontend
-     - frontend.css
+      - admin.css
+    - frontend
+      - frontend.css
 - my-plugin.php
 
 
