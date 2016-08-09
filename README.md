@@ -39,11 +39,17 @@ In you plugin main file by default are defined some constants:
     - THE_PLUGIN_JS_URL
     - THE_PLUGIN_CSS_URL
     
-Also is declared de 'init' hook for the plugin initialization
+It also declares the 'init' hook for the plugin initialization and the register_activation_hook
 
     function init_my_plugin_plugin ()
     {
     
     }
     add_action('init', 'init_my_plugin_plugin');`
+    
+    function activate_my_plugin_plugin ()
+    {
+    
+    }
+    register_activation_hook(__FILE__, 'activate_my_plugin_plugin');
  
