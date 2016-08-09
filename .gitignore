@@ -3,7 +3,6 @@ wpterminal/bin/__pycache__
 wpterminal/bin/modules/__pycache__
 wp-includes/
 wp-admin/
-*.php
 *.txt
 *.html
 *.htaccess
