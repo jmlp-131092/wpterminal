@@ -8,24 +8,85 @@ class PluginModule(AbstractModule):
 		self.plugins_path = self.paths['plugins']
 		self.plugin_path = self.plugins_path
 
+
 	def create ( self, line = 0) :
-		self.dirname = input('Plugin Directory Name: ')
+
+		self.dirname = input('[+] Plugin Directory Name: ')
+
 		self.plugin_declarations = {
-			'Plugin Name': input('Plugin name: '),
-			'Plugin URI': input('Plugin URI: '),
-			'Description': input('Plugin description: '),
-			'Author': input('Plugin Author: '),
-			'Author URI': input('Plugin Author URI: '),
-			'Domain Path': ( input('Domain Path (/languages/): ') if input('Domain Path (/languages/): ') != '' else '/languages/' ),
-			'Text Domain': ( input('Text Domain (plugin_name): ') if  input('Text Domain (plugin_name): ') != '' else self.dirname.replace('-', '_').lower() ),
-			'Version': ( input('Version (0.0.1): ') if input('Version (0.0.1): ') != '' else '0.0.1' )
+			'Plugin Name': {
+				'default': 'undefined',
+				'value': input('[+] Plugin name: ')
+			},
+			'Plugin URI': {
+				'default': '#',
+				'value': input('[+] Plugin URI: ')
+			},
+			'Description':{
+				'defaut': 'undefined',
+				'value': input('[+] Plugin description: ')
+			},
+			'Author': {
+				'default': 'wpterminal',
+				'value': input('[+] Plugin Author: ')
+			},
+			'Author URI': {
+				'default': '#',
+				'value': input('[+] Plugin Author URI: ')
+			},
+			'Domain Path': {
+				'default': '/languages/',
+				'value': input('[+] Domain Path (/languages/): ')
+			},
+			'Text Domain':{
+				'default': self.dirname.replace('-', '_').lower(),
+				'value': input('[+] Text Domain (plugin_name): ')
+			},
+			'Version': {
+				'default': '0.0.1',
+				'value': input('[+] Version (0.0.1): ')
+			}
 		}
+
+		self._maybeAutofillInputs()
+		self._createPluginDirsAndResources()
+		self.plugin_file = self._createFile( self.plugin_path,  '/' + self.dirname.lower() + '.php' )
+		self._writePluginDeclaration()
+		self._populateMainFile()
+
+		#setAdvancedSettings = True if input('Do you want to set more advanced options? (y/n): ') == 'y' else False
+
+		#if ( setAdvancedSettings ) :
+			#print(' ')
+			#self._askForOOP()
+		#else:
+			#print(' ')
+
+		print('WordPress Plugin structure created successfully at => ' + self.plugin_path )
+
+
+	def remove ( self, line= 0):
+		return
+
+
+	def clone ( self, line = 0) :
+		return
+
+
+	def run ( self ):
+		return
+
+
+	def _createPluginDirsAndResources ( self ) :
+
 		self.plugin_path = self._createDir( self.plugins_path, '/' + self.dirname )
 
 		self.plugin_inc_path = self._createDir(self.plugin_path, '/inc')
+		self.plugin_classes_path = self._createDir(self.plugin_inc_path, '/classes')
+		self.plugin_interfaces_path = self._createDir(self.plugin_inc_path, '/interfaces')
 		self.plugin_res_path = self._createDir(self.plugin_path, '/res')
 		self.plugin_templates_path = self._createDir(self.plugin_path, '/templates')
-		self.plugin_langs_path = self._createDir(self.plugin_path, '/' + ( self.plugin_declarations['Domain Path'] if self.plugin_declarations['Domain Path'] != '' else 'languages') )
+		self.plugin_langs_path = self._createDir(self.plugin_path, '/' +  self.plugin_declarations['Domain Path']['value'] )
 
 		self.plugin_js_path = self._createDir(self.plugin_res_path, '/js')
 		self.plugin_css_path = self._createDir(self.plugin_res_path, '/css')
@@ -40,44 +101,69 @@ class PluginModule(AbstractModule):
 		self.plugin_js_frontend_path = self._createDir(self.plugin_js_path, '/frontend')
 		self.frontend_js = self._createFile(self.plugin_js_frontend_path, '/frontend.js')
 
-		self.plugin_file = self._createFile( self.plugin_path,  '/' + self.dirname + '.php' )
-		self._writePluginDeclaration( self.plugin_declarations, self.plugin_file )
 
-	def remove ( self, line= 0):
-		return
+	def _writePluginDeclaration ( self ):
 
-	def clone ( self, line = 0) :
-		return
+		self.plugin_file.write('<?php\n')
+		self.plugin_file.write('/*\n')
+		self.plugin_file.write(' *\n')
 
-	def run ( self ):
-		return
+		for key, value in self.plugin_declarations.items() :
+			item = self.plugin_declarations[key];
+			self.plugin_file.write(' * ' + key + ': ' + item['value'] + '\n')
 
-	def _writePluginDeclaration ( self, plugin_declarations, _file ):
-		_file.write('<?php\n')
-		_file.write('/*\n')
-		_file.write(' *\n')
-		for key, value in plugin_declarations.items() :
-			_file.write(' * ' + key + ': ' + value + '\n')
-		_file.write(' *\n')
-		_file.write(' */\n\n')
-		_file.write('define("THE_PLUGIN_BASE_PATH", plugin_dir_path( __FILE__ ));\n')
-		_file.write('define("THE_PLUGIN_INC_PATH", plugin_dir_path( __FILE__ ) . "/inc");\n')
-		_file.write('define("THE_PLUGIN_JS_URL", plugin_dir_url( __FILE__ ) . "/res/js");\n')
-		_file.write('define("THE_PLUGIN_STYLES_URL", plugin_dir_url( __FILE__ ) . "/res/css");\n')
-		_file.write('define("THE_PLUGIN_TEMPLATES_PATH", plugin_dir_path( __FILE__ ) . "/templates");\n\n')
+		self.plugin_file.write(' *\n')
+		self.plugin_file.write(' */\n\n')
+
+
+	def _maybeAutofillInputs ( self ) :
+
+		for key, value in self.plugin_declarations.items():
+			item = self.plugin_declarations[key];
+
+			if ( item['value'] == '' or item['value'] == False) :
+				item['value'] = item['default']
+				self.plugin_declarations[key] = item;
+
+
+	def  _populateMainFile ( self ):
+
+		capsPluginName = self.dirname.replace('-', '_').upper()
+
+		self.plugin_file.write('if ( ! defined( \'ABSPATH\' ) ) exit; // Exit if accessed directly\n\n')
+
+		self.plugin_file.write('define("' + capsPluginName +'_BASE_PATH", plugin_dir_path( __FILE__ ));\n')
+		self.plugin_file.write('define("' + capsPluginName +'_INC_PATH", plugin_dir_path( __FILE__ ) . "/inc");\n')
+		self.plugin_file.write('define("' + capsPluginName +'_JS_URL", plugin_dir_url( __FILE__ ) . "/res/js");\n')
+		self.plugin_file.write('define("' + capsPluginName +'_STYLES_URL", plugin_dir_url( __FILE__ ) . "/res/css");\n')
+		self.plugin_file.write('define("' + capsPluginName +'_TEMPLATES_PATH", plugin_dir_path( __FILE__ ) . "/templates");\n\n')
 
 		init_fnc_declaration = 'function init_'  + self.dirname.replace('-', '_').lower() + '_plugin ()\n{\n\n}\n'
 		init_hook_declaration = 'add_action("init", "init_' + self.dirname.replace('-', '_').lower() + '_plugin");\n\n'
 
-		_file.write(init_fnc_declaration);
-		_file.write(init_hook_declaration);
+		self.plugin_file.write(init_fnc_declaration);
+		self.plugin_file.write(init_hook_declaration);
 
 		activate_fnc_declaration = 'function activate_'  + self.dirname.replace('-', '_').lower() + '_plugin ()\n{\n\n}\n'
-		activate_hook_declaration = 'register_activation_hook(__FILE__, "active_' + self.dirname.replace('-', '_').lower() + '_plugin");\n'
+		activate_hook_declaration = 'register_activation_hook(__FILE__, "activate_' + self.dirname.replace('-', '_').lower() + '_plugin");\n\n'
 
-		_file.write(activate_fnc_declaration);
-		_file.write(activate_hook_declaration);
+		self.plugin_file.write(activate_fnc_declaration);
+		self.plugin_file.write(activate_hook_declaration);
+
+		end_string = '/*\n *\n * File generated by WPTERMINAL - feel free to colaborate at https://github.com/jmlp-131092/wpterminal\n *\n */\n\n'
+		self.plugin_file.write(end_string)
+
+		self.plugin_file.write('?>')
 
 
+	def _askForOOP( self ):
 
-		_file.write('?>')
+		hasOOP = True if input('[+] Do you want to use a main class to load the plugin? (y/n)')  == 'y' else False
+		className = ''
+		setInstanceAsGlobal = False
+
+		if ( hasOOP ) :
+			className = input('[+] Class Name: ')
+			setInstanceAsGlobal = True if  input('[+] Create class instance as global? (y/n)') == 'y' else False
+		else :
+			return

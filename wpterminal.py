@@ -6,6 +6,9 @@ from wpterminal.bin.help_module import HelpModule
 class WPCMD(HelpModule):
 
 	def __init__ ( self ):
+		print(' ')
+		print(' WP TERMINAL by jmlp-131092, feel free to colaborate on https://github.com/jmlp-131092.')
+		print(' ')
 		self.paths = {
 			'plugins': 'wp-content/plugins/',
 			'themes': 'wp-content/themes/'
@@ -60,6 +63,8 @@ class WPCMD(HelpModule):
 			for cmd, value in self.help_lines.items():
 				print(cmd + ' => ' + value)
 				print('---------------------------')
+		else:
+			print('[ ! ] - Invalid command')
 
 
 
