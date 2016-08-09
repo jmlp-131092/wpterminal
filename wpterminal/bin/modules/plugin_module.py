@@ -45,12 +45,17 @@ class PluginModule(AbstractModule):
 			'Version': {
 				'default': '0.0.1',
 				'value': input('[+] Version (0.0.1): ')
+			},
+			'License': {
+				'default': 'GPLv2',
+				'value': input('[+] License (GPLv2): ')
 			}
 		}
 
 		self._maybeAutofillInputs()
 		self._createPluginDirsAndResources()
 		self.plugin_file = self._createFile( self.plugin_path,  '/' + self.dirname.lower() + '.php' )
+		self.license_file = self._createFile( self.plugin_path, '/license.txt')
 		self._writePluginDeclaration()
 		self._populateMainFile()
 
@@ -112,6 +117,11 @@ class PluginModule(AbstractModule):
 			item = self.plugin_declarations[key];
 			self.plugin_file.write(' * ' + key + ': ' + item['value'] + '\n')
 
+		self.plugin_file.write(' *\n')
+		self.plugin_file.write(' *\n')
+
+		self.plugin_file.write(' * Paste your plugin license information here - for more info about the GPLv2 license please check the link bellow\n * - https://developer.wordpress.org/plugins/the-basics/including-a-software-license\n')
+		self.plugin_file.write(' *\n')
 		self.plugin_file.write(' *\n')
 		self.plugin_file.write(' */\n\n')
 
