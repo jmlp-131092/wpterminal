@@ -1,4 +1,4 @@
-import os, sys, requests, json
+import os, sys, json
 from wpterminal.bin.abstract_module import AbstractModule
 
 class ThemeModule(AbstractModule):

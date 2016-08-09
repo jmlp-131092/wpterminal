@@ -1,4 +1,4 @@
-import os, sys, json, requests, cmd
+import os, sys, json
 
 class HelpModule:
 	def __init__ ( self ):

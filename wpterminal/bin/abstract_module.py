@@ -1,4 +1,4 @@
-import sys, os, json, requests
+import sys, os, json
 
 class AbstractModule():
 

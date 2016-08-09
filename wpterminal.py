@@ -1,4 +1,4 @@
-import os, sys, json, requests, cmd
+import os, sys, json
 from wpterminal.bin.modules.plugin_module import PluginModule
 from wpterminal.bin.modules.theme_module import ThemeModule
 from wpterminal.bin.help_module import HelpModule

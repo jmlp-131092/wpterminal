@@ -1,5 +1,4 @@
-import os
-import sys
+import os, sys, json
 from wpterminal.bin.abstract_module import AbstractModule
 
 class PluginModule(AbstractModule):
