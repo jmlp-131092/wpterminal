@@ -18,6 +18,8 @@ By the time you're reading this only the Plugin Module is working and it was onl
 - languages
 - templates
 - res
+ - js
+ - css
 - my-plugin.php
 
 
