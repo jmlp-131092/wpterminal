@@ -13,23 +13,13 @@ By the time you're reading this only the Plugin Module is working and it was onl
 
 
 # Plugin folder structure
- - /my-plugin
-  - /inc
-  - /templates
-  - /res
-   - /js
-    - /admin
-      - admin.js
-    -/frontend
-      - frontend.js
-   - /css
-    - /admin
-      - admin.css
-    -/frontend
-      - frontend.css
-  - /languages
-  - my-plugin.php
 
+- inc
+- languages
+- templates
+- res
+- my-plugin.php
+- 
 In you plugin main file by default are defined some constants:
 
     - THE_PLUGIN_BASE_PATH
@@ -37,5 +27,5 @@ In you plugin main file by default are defined some constants:
     - THE_PLUGIN_TEMPLATES_PATH
     - THE_PLUGIN_JS_URL
     - THE_PLUGIN_CSS_URL
-    - 
+    
 Also is declared de 'init' hook for the plugin initialization
