@@ -6,3 +6,4 @@ wp-admin/
 *.php
 *.txt
 *.html
+*.htaccess
