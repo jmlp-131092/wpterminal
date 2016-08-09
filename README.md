@@ -12,30 +12,30 @@ By the time you're reading this only the Plugin Module is working and it was onl
  - Start programming and have fun
 
 
-# PLUGIN STRUCTURE
-  - /my-plugin
-    - /inc
-    - /res
-    - /templates
-    - /res
-      - /js
-        - /admin
-          - admin.js
-        -/frontend
-          - frontend.js
-      - /css
-        - /admin
-          - admin.css
-        -/frontend
-          - frontend.css
-    - /languages
-    - my-plugin.php
+# Plugin folder structure
+ - /my-plugin
+  - /inc
+  - /templates
+  - /res
+   - /js
+    - /admin
+      - admin.js
+    -/frontend
+      - frontend.js
+   - /css
+    - /admin
+      - admin.css
+    -/frontend
+      - frontend.css
+  - /languages
+  - my-plugin.php
 
-* In you plugin main file by default are defined some constants:
+In you plugin main file by default are defined some constants:
+
     - THE_PLUGIN_BASE_PATH
     - THE_PLUGIN_INC_PATH
     - THE_PLUGIN_TEMPLATES_PATH
     - THE_PLUGIN_JS_URL
     - THE_PLUGIN_CSS_URL
     - 
-* Also is declared de 'init' hook for the plugin initialization
+Also is declared de 'init' hook for the plugin initialization
