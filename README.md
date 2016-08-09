@@ -21,8 +21,8 @@ By the time you're reading this only the Plugin Module is working and it was onl
  - js
    - admin
      - admin.js
-   - frontend
-     - frontend.js
+    - frontend
+      - frontend.js
  - css
    - admin
      - admin.css
