@@ -42,7 +42,7 @@ class ThemeModule(AbstractModule):
 			self.footer_file = self._createFile(self.theme_path, '/footer.php')
 			self.single_file = self._createFile(self.theme_path, '/single.php')
 
-		def _ createThemeHeader ( self ):
+		def _createThemeHeader ( self ):
 			return
 
 		def _createThemeFooter ( self ):
