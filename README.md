@@ -20,7 +20,9 @@ By the time you're reading this only the Plugin Module is working and it was onl
 - res
  - js
   - admin
+   - admin.js
   - frontend
+   - frontend.js
  - css
   - admin
   - css
